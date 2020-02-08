@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lista9remake", "Lista9remake\Lista9remake.vcxproj", "{CD7E0ED1-1462-443A-915A-67957365ED1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Debug|x64.ActiveCfg = Debug|x64
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Debug|x64.Build.0 = Debug|x64
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Debug|x86.Build.0 = Debug|Win32
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Release|x64.ActiveCfg = Release|x64
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Release|x64.Build.0 = Release|x64
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Release|x86.ActiveCfg = Release|Win32
+		{CD7E0ED1-1462-443A-915A-67957365ED1C}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {956A7660-6EF7-429C-84E3-A828F86ACA59}
+	EndGlobalSection
+EndGlobal
