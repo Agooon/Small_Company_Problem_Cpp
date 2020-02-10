@@ -1,5 +1,10 @@
 #pragma once
 #include <Windows.h>
+
+// Class made to measure time of optimizers
+// In my opinion a whole class wasn't nessesary, but
+// the task required it.
+
 class CTimer
 {
 public:

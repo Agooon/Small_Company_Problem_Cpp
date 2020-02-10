@@ -1,10 +1,11 @@
 #pragma once
+
+// Simple class to generate random values
 class CRandom
 {
 public:
 	CRandom();
 	~CRandom();
-
 	void setSeed(int newSeed);
 
 	int iRandInt(int from, int to);
@@ -12,7 +13,7 @@ public:
 
 private:
 	int seed;
-	std::default_random_engine generator;
+	std::mt19937 generator;
 	std::random_device device;
 };
 

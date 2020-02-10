@@ -18,13 +18,13 @@ void CRandom::setSeed(int newSeed) {
 int CRandom::iRandInt(int from, int to)
 {
 	if (from > to) return to;
-	std::uniform_int_distribution<int> distr(from, to);
+	std::uniform_int_distribution<> distr(from, to);
 	return distr(generator);
 }
 
 double CRandom::dRandDouble(double from, double to)
 {
 	if (from > to) return to;
-	std::uniform_real_distribution<double> distr(from, to);
+	std::uniform_real_distribution<> distr(from, to);
 	return distr(generator);
 }

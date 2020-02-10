@@ -5,6 +5,8 @@
 #define err_wrong_size 1
 #define err_wrong_index 1
 
+// Simple class for using handy use of Matrixs
+
 template <typename T> class Matrix
 {
 public:

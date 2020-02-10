@@ -5,7 +5,6 @@
 #include "CRandom.h"
 #include "Matrix.h"
 #include "CProblem.h"
-#include "MyInt.h"
 #define NO_ERR 0;
 #define PD_SOLUTION_ERR_NOT_EXIST 1
 #define PD_SOLUTION_ERR_WRONG_SIZE 2
@@ -17,18 +16,20 @@
 #define WRONG_SOLUTION_FROM_FILE 8
 
 #define amountOfConst 4
+// For repearing  solution in dGetQuality
 #define differenceRepair 1.03
 
-
-#define rand_min_sSomething 10.0
-#define rand_max_sSomething 500.0
-
+// For generating close to reality problem
 #define rand_multiplier1_5 1.5
 #define rand_multiplier 2.0
 #define rand_multiplier3 3
 #define rand_multiplier4 4.0
 #define rand_multiplier8 8.0
 #define rand_multiplier12 12.0
+
+// CMSCProblem is a class for a main problem of a task
+// Short explanation of it is in "Lista9remake.cpp"
+
 template<typename T>
 class CMscnProblem: public CProblem<T>
 {
@@ -95,19 +96,9 @@ public:
 
 ////---- Other functions ----////
 
-	inline bool checkBasicCorrectness(std::vector<T> pdSol);
-
-	inline double dGetQuality(std::vector<T> &pdSol);
-	inline void vRepairMinmax(std::vector<T> &pdSol);
-	inline void vRepairLimits(std::vector<T> &pdSol);
-
-
-	inline bool helperCheckMinMax(int index, Matrix<T> minmaxS, T value);
-	inline bool bCheckMinMax(std::vector<T> pdSol);
-	inline bool bCheckOverload();
-
+	// Functions from abstract class
 	inline bool bConstraintsSatisfied(std::vector<T> pdSol);
-
+	inline double dGetQuality(std::vector<T> &pdSol);
 
 	inline bool bReadFromFileInst(const char *name);
 	inline bool bSaveToFileInst(const char *name);
@@ -115,14 +106,13 @@ public:
 	inline bool bReadFromFileSol(const char *name);
 	inline bool bSaveToFileSol(const char *name);
 
-	//Lista 10 zad2
-
+	// Functions for generating random problem
 	inline void vsetBasics(int d, int f, int m, int s);
-	inline void vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed);
+	inline void vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
 
 	inline void vsetInstance(const CMscnProblem<T> &newInstance);
 
-////--- Functions for checking correctness of other functions ----////
+////--- Functions for checking the status of the problem/solution ----////
 
 	inline void vShowInstance();
 	inline void vShowSolution();
@@ -131,109 +121,134 @@ public:
 
 	int geterrCode() { return this->errCode; }
 private:
+
+	// Functions for dGetQuality for repearing the solution
+	inline void vRepairMinmax(std::vector<T> &pdSol);
+	inline void vRepairLimits(std::vector<T> &pdSol);
+
+	// Functions for bConstraintsSatisfied to check the if solution is correct
+	inline bool checkBasicCorrectness(std::vector<T> pdSol);
+	inline bool bCheckMinMax(std::vector<T> pdSol);
+	inline bool helperCheckMinMax(int index, Matrix<T> minmaxS, T value);
+	inline bool bCheckOverload();
+
+	CRandom myGenerator;
 	inline void vsetMinmax();
-//iloœci dostawców/fabryk/magzynów/sklepów
-	int dostL = 0;
-	int fabL = 0;
-	int magL = 0;
-	int sklL = 0;
+// amount of suppliers/fabrics/warehouses/shops
+	int dostL = 0; // dostL - amount of suppliers 
+	int fabL = 0; // fabL - amount of fabrics
+	int magL = 0; // magL - amount of warehouses
+	int sklL = 0; // sklL - amount of shops
 
 //////------- Data of The Problem -------//////
 
-//-- Koszta produkcji surowca/produktu w poszczególnych etapach --//
+//-- Costs of production/transportation raw materials/products on each stage --//
 
-	Matrix<T> cd; //koszt surowca od dostawcy do fabryki
-	Matrix<T> cf; //koszt produktu od fabryki do magazynu
-	Matrix<T> cm; //koszt produktu od magazynu do sklepu
+	Matrix<T> cd; // cost of buying and transportingvraw materials from supplier X to fabric Y
+	Matrix<T> cf; // cost of creating and transporting products from fabric X to warehouse Y
+	Matrix<T> cm; // cost of storing and transporting products from warehouse X to shop Y
 
-//-- Moce przerobowe dostawców/fabryk/magazynów/sklepów --//
+	// In the task maintaining shops/selling products was for free
 
-	std::vector<T> sd;//tablica mocy przerobowej dostawców
-	std::vector<T> sf;//tablica mocy przerobowej fabryk
-	std::vector<T> sm;//tablica mocy przerobowej magzaynów
-	std::vector<T> ss;//tablica mocy przerobowej sklepów
+//-- Processing capacity of suppliers/fabrics/warehouses/shops --//
 
-//-- koszty utrzymania dostawców/fabryk/magazynów i przychody sklepu --//
+	std::vector<T> sd;// array of processing capacity of suppliers
+	std::vector<T> sf;// array of processing capacity of fabrics
+	std::vector<T> sm;// array of processing capacity of warehouses
+	std::vector<T> ss;// array of processing capacity of shops
 
-	std::vector<T> ud;//tablica kosztów utrzymania dostawców
-	std::vector<T> uf;//tablica kosztów utrzymania fabryk
-	std::vector<T> um;//tablica kosztów utrzymania magzaynów
-	std::vector<T> p;//tablica przychodów sklepów	//koszty utrzymania sklepu=0
+//-- Maintenance costs suppliers/fabrics/warehouses and income of shops --//
 
-//-- Minimalne i maksymalne wartoœci dla xd/xf/xm --//
+	std::vector<T> ud;// array of maintenance costs of suppliers
+	std::vector<T> uf;// array of maintenance costs of fabrics
+	std::vector<T> um;// array of maintenance costs of warehouses
+	std::vector<T> p;// array of incomes of shops	// maintenance costs of the shop=0
 
-	Matrix<T> xdminmax; //maksymalna iloœæ surowców od dostawcy X od fabryki Y
-	Matrix<T> xfminmax; //maksymalna iloœæ surowców od fabryki X od magazynu Y
-	Matrix<T> xmminmax; //maksymalna iloœæ surowców od magazynu X od sklepu Y
+//-- Minimum and maximum amounts of xd/xf/xm --//
+	// xd/xf/xm are parts of the solution
+	// xd - matrix of amount of raw materials transporting from supplier X to fabric Y
+	// xf - matrix of amount of products that are created and transported from fabric X to warehouse Y
+	// xm - matrix of amount of products that are stored and transported from warehouse X to shop Y
 
-//////------- Rozwi¹zanie problemu -------//////
+	// xdminmax -  a matrix of heigth dostL*fabL and length 2 (to store minimum and maximum for each value in xd matrix)
+	// xfminmax/xmminmax - are similar to above just the heigth is diffent, depending of amount of fabrics/warehouses/shops
 
-	Matrix<T> xd;//iloœæ surowców od dostawcy X od fabryki Y
-	Matrix<T> xf;//iloœæ surowców od fabryki X od magazynu Y
-	Matrix<T> xm;//iloœæ surowców od magazynu X od sklepu Y
+	Matrix<T> xdminmax;// explained above
+	Matrix<T> xfminmax;// explained above
+	Matrix<T> xmminmax;// explained above
+
+	Matrix<T> xd;// explained above
+	Matrix<T> xf;// explained above
+	Matrix<T> xm;// explained above
 
 };
 
+// Specialized functions
+
+//Specialized INT
 template<>
 bool CMscnProblem<int>::checkBasicCorrectness(std::vector<int> pdSol);
-
-template<>
-bool CMscnProblem<double>::checkBasicCorrectness(std::vector<double> pdSol);
 
 template<>
 double CMscnProblem<int>::dGetQuality(std::vector<int> &pdSol);
 
 template<>
-double CMscnProblem<double>::dGetQuality(std::vector<double> &pdSol);
-
-template<>
 void CMscnProblem<int>::vRepairMinmax(std::vector<int>& pdSol);
-
-template<>
-void CMscnProblem<double>::vRepairMinmax(std::vector<double>& pdSol);
 
 template<>
 void CMscnProblem<int>::vRepairLimits(std::vector<int> &pdSol);
 
 template<>
-void CMscnProblem<double>::vRepairLimits(std::vector<double> &pdSol);
-
-template<>
 bool CMscnProblem<int>::helperCheckMinMax(int index, Matrix<int> minmaxS, int value);
-
-template<>
-bool CMscnProblem<double>::helperCheckMinMax(int index, Matrix<double> minmaxS, double value);
 
 template<>
 bool CMscnProblem<int>::bCheckMinMax(std::vector<int> pdSol);
 
 template<>
-bool CMscnProblem<double>::bCheckMinMax(std::vector<double> pdSol);
-
-template<>
 bool CMscnProblem<int>::bCheckOverload();
-
-template<>
-bool CMscnProblem<double>::bCheckOverload();
 
 template<>
 bool CMscnProblem<int>::bReadFromFileInst(const char * name);
 
 template<>
-bool CMscnProblem<double>::bReadFromFileInst(const char * name);
+bool CMscnProblem<int>::bReadFromFileSol(const char * name);
 
 template<>
-bool CMscnProblem<int>::bReadFromFileSol(const char * name);
+void CMscnProblem<int>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
+
+//Specialized DOUBLE
+template<>
+bool CMscnProblem<double>::checkBasicCorrectness(std::vector<double> pdSol);
+
+template<>
+double CMscnProblem<double>::dGetQuality(std::vector<double> &pdSol);
+
+template<>
+void CMscnProblem<double>::vRepairMinmax(std::vector<double>& pdSol);
+
+template<>
+void CMscnProblem<double>::vRepairLimits(std::vector<double> &pdSol);
+
+template<>
+bool CMscnProblem<double>::helperCheckMinMax(int index, Matrix<double> minmaxS, double value);
+
+template<>
+bool CMscnProblem<double>::bCheckMinMax(std::vector<double> pdSol);
+
+template<>
+bool CMscnProblem<double>::bCheckOverload();
+
+template<>
+bool CMscnProblem<double>::bReadFromFileInst(const char * name);
 
 template<>
 bool CMscnProblem<double>::bReadFromFileSol(const char * name);
 
 template<>
-void CMscnProblem<int>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed);
+void CMscnProblem<double>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
 
-template<>
-void CMscnProblem<double>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed);
 
+// Functions for every type
 template<typename T>
 CMscnProblem<T>::CMscnProblem()
 {
@@ -517,7 +532,6 @@ bool CMscnProblem<T>::checkBasicCorrectness(std::vector<T> pdSol)
 	return false;
 }
 
-
 template<typename T>
 double CMscnProblem<T>::dGetQuality(std::vector<T> &pdSol) {
 	return 0;
@@ -528,7 +542,6 @@ bool CMscnProblem<T>::helperCheckMinMax(int index, Matrix<T> minmaxS, T value)
 {
 	return false;
 }
-
 
 template<typename T>
 bool CMscnProblem<T>::bCheckMinMax(std::vector<T> pdSol) {
@@ -774,7 +787,7 @@ void CMscnProblem<T>::vsetBasics(int d, int f, int m, int s) {
 }
 
 template<typename T>
-void CMscnProblem<T>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed) {
+void CMscnProblem<T>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal) {
 
 }
 

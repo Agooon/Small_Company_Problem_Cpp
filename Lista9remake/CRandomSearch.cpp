@@ -2,7 +2,7 @@
 #include "CRandomSearch.h"
 #pragma warning(disable: 4244)
 
-
+//Specialized INT
 template<>
 std::vector<int> CRandomSearch<int>::getSolution(double time)
 {
@@ -37,6 +37,19 @@ std::vector<int> CRandomSearch<int>::getSolution(double time)
 }
 
 template<>
+std::vector<int> CRandomSearch<int>::generateSingleSol()
+{
+	this->myGenerator.setSeed(this->device());
+	std::vector<int> newSol;
+	newSol.resize(0);
+	for (int i = 0; i < this->actualInstance->getLength(); i++) {
+		newSol.push_back(this->myGenerator.dRandDouble(this->actualInstance->getMinMax()[i].first, this->actualInstance->getMinMax()[i].second));
+	}
+	return newSol;
+}
+
+//Specialized DOUBLE
+template<>
 std::vector<double> CRandomSearch<double>::getSolution(double time)
 {
 	this->myGenerator.setSeed(device());
@@ -67,20 +80,6 @@ std::vector<double> CRandomSearch<double>::getSolution(double time)
 
 	std::cout << std::endl << "Quality of found solution: " << this->actualInstance->dGetQuality(actualSol) << std::endl;
 	return this->actualSol;
-}
-
-
-
-template<>
-std::vector<int> CRandomSearch<int>::generateSingleSol()
-{
-	this->myGenerator.setSeed(this->device());
-	std::vector<int> newSol;
-	newSol.resize(0);
-	for (int i = 0; i < this->actualInstance->getLength(); i++) {
-		newSol.push_back(this->myGenerator.dRandDouble(this->actualInstance->getMinMax()[i].first, this->actualInstance->getMinMax()[i].second));
-	}
-	return newSol;
 }
 
 template<>

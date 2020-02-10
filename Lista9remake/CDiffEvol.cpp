@@ -1,26 +1,16 @@
 #include "pch.h"
 #include "CDiffEvol.h"
+// The task was to make template class that can take integers.
+// This works for integer type, it wasn't nessesary to optimize for this type.
+// And as you would expect, it works really bad.
 
-
+//Specialized INT
 template<>
 void CDiffEvol<int>::setPopulation(int amount)
 {
 	this->population.clear();
 	this->amountOfPopulation = amount;
 	std::vector <int> newSol;
-	for (int i = 0; i < amount; i++) {
-		newSol = this->generateSol(this->device());
-		this->actualInstance->dGetQuality(newSol);
-		this->population.push_back(newSol);
-	}
-}
-
-template<>
-void CDiffEvol<double>::setPopulation(int amount)
-{
-	this->population.clear();
-	this->amountOfPopulation = amount;
-	std::vector <double> newSol;
 	for (int i = 0; i < amount; i++) {
 		newSol = this->generateSol(this->device());
 		this->actualInstance->dGetQuality(newSol);
@@ -38,18 +28,6 @@ std::vector<int> CDiffEvol<int>::generateSol(int seed)
 	}
 	return newSol;
 }
-
-template<>
-std::vector<double> CDiffEvol<double>::generateSol(int seed)
-{
-	this->myGenerator.setSeed(seed);
-	std::vector<double> newSol;
-	for (int i = 0; i < this->actualInstance->getLength(); i++) {
-		newSol.push_back(this->myGenerator.dRandDouble(this->actualInstance->getMinMax()[i].first, this->actualInstance->getMinMax()[i].second));
-	}
-	return newSol;
-}
-
 
 template<>
 std::vector<int> CDiffEvol<int>::getSolution(double time)
@@ -107,6 +85,31 @@ std::vector<int> CDiffEvol<int>::getSolution(double time)
 	std::cout << std::endl << "Najlepsze rozwiazanie w populacji: " << this->actualInstance->dGetQuality(this->actualSol) << std::endl;
 
 	return this->actualSol;
+}
+
+//Specialized DOUBLE
+template<>
+void CDiffEvol<double>::setPopulation(int amount)
+{
+	this->population.clear();
+	this->amountOfPopulation = amount;
+	std::vector <double> newSol;
+	for (int i = 0; i < amount; i++) {
+		newSol = this->generateSol(this->device());
+		this->actualInstance->dGetQuality(newSol);
+		this->population.push_back(newSol);
+	}
+}
+
+template<>
+std::vector<double> CDiffEvol<double>::generateSol(int seed)
+{
+	this->myGenerator.setSeed(seed);
+	std::vector<double> newSol;
+	for (int i = 0; i < this->actualInstance->getLength(); i++) {
+		newSol.push_back(this->myGenerator.dRandDouble(this->actualInstance->getMinMax()[i].first, this->actualInstance->getMinMax()[i].second));
+	}
+	return newSol;
 }
 
 template<>
@@ -167,29 +170,5 @@ std::vector<double> CDiffEvol<double>::getSolution(double time)
 	return this->actualSol;
 }
 
-
-
-template<>
-void CDiffEvol<MyInt>::setPopulation(int amount)
-{
-	
-}
-
-template<>
-std::vector<MyInt> CDiffEvol<MyInt>::generateSol(int seed)
-{
-	return std::vector<MyInt>();
-}
-
-
-template<>
-std::vector<MyInt> CDiffEvol<MyInt>::getSolution(double time)
-{
-	return std::vector<MyInt>();
-}
-
-
-
 template class CDiffEvol<double>;
 template class CDiffEvol<int>;
-template class CDiffEvol<MyInt>;

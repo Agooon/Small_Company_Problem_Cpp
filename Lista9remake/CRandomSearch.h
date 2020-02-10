@@ -25,19 +25,20 @@ public:
 private:	
 };
 
+// Specialized functions
 template<>
 std::vector<int> CRandomSearch<int>::getSolution(double time);
-
-template<>
-std::vector<double> CRandomSearch<double>::getSolution(double time);
 
 template<>
 std::vector<int> CRandomSearch<int>::generateSingleSol();
 
 template<>
+std::vector<double> CRandomSearch<double>::getSolution(double time);
+
+template<>
 std::vector<double> CRandomSearch<double>::generateSingleSol();
 
-
+// Functions for every type
 template<typename T>
 CRandomSearch<T>::CRandomSearch()
 {

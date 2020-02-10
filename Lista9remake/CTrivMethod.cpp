@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CTrivMethod.h"
 
+//Specialized INT
 template <>
 std::vector<int> CTrivMethod<int>::generateSingleSol()
 {
@@ -12,6 +13,8 @@ std::vector<int> CTrivMethod<int>::generateSingleSol()
 	std::cout << std::endl << "Quality: " << this->actualInstance->dGetQuality(actualSol);
 	return this->actualSol;
 }
+
+//Specialized DOUBLE
 template <>
 std::vector<double> CTrivMethod<double>::generateSingleSol()
 {

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMeanSolver.h"
 
+//Specialized INT
 template<>
 std::vector<int> CMeanSolver<int>::generateSingleSol()
 {
@@ -13,6 +14,7 @@ std::vector<int> CMeanSolver<int>::generateSingleSol()
 	return this->actualSol;
 }
 
+//Specialized DOUBLE
 template<>
 std::vector<double> CMeanSolver<double>::generateSingleSol()
 {

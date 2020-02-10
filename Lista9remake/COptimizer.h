@@ -3,6 +3,9 @@
 #include "CProblem.h"
 #include "CTimer.h"
 #pragma warning(disable:4244)
+
+// Abstract class for optimizers
+
 template<typename T>
 class COptimizer
 {
@@ -18,9 +21,12 @@ protected:
 	CTimer timer;
 	int errCode = 0;
 	std::vector<T> actualSol;
-	std::random_device device;
-	CRandom myGenerator;
 	CProblem<T> *actualInstance;
+
+	// Most of optimizers would like to use random values, some don't need it
+	// I leave it here, becouse in both optimizers that work, random numbers are needed
+	std::random_device device; 
+	CRandom myGenerator;
 };
 
 template <typename T>

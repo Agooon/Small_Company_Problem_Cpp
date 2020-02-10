@@ -3,7 +3,6 @@
 #include "CRandom.h"
 #include "CMscnProblem.h"
 #include "COptimizer.h"
-#include "MyInt.h"
 #define amountOfConst 4
 
 #define CrossProb 0.95
@@ -34,8 +33,6 @@ public:
 	inline void setInstance(CProblem<T> *newProblem) { this->actualInstance = newProblem; }
 	inline CProblem<T>* getInstance() { return this->actualInstance; }
 
-	
-
 	inline bool bindividualsAreDifferent(int ind, int baseInd, int addInd0, int addInd1);
 
 	inline std::vector<T> getSolution(double time);
@@ -51,37 +48,29 @@ private:
 	int amountOfPopulation=default_population;
 };
 
+// Specialized functions
+
+//Specialized INT
 template<>
 void CDiffEvol<int>::setPopulation(int amount);
-
-template<>
-void CDiffEvol<double>::setPopulation(int amount);
 
 template<>
 std::vector<int> CDiffEvol<int>::generateSol(int seed);
 
 template<>
-std::vector<double> CDiffEvol<double>::generateSol(int seed);
+std::vector<int> CDiffEvol<int>::getSolution(double time);
 
+//Specialized DOUBLE
+template<>
+void CDiffEvol<double>::setPopulation(int amount);
 
 template<>
-std::vector<int> CDiffEvol<int>::getSolution(double time);
+std::vector<double> CDiffEvol<double>::generateSol(int seed);
 
 template<>
 std::vector<double> CDiffEvol<double>::getSolution(double time);
 
-
-template<>
-void CDiffEvol<MyInt>::setPopulation(int amount);
-
-template<>
-std::vector<MyInt> CDiffEvol<MyInt>::generateSol(int seed);
-
-
-template<>
-std::vector<MyInt> CDiffEvol<MyInt>::getSolution(double time);
-
-
+// Functions for every type
 template<typename T>
 CDiffEvol<T>::CDiffEvol()
 {
@@ -89,6 +78,7 @@ CDiffEvol<T>::CDiffEvol()
 	//	setPopulation(default_population);
 	this->amountOfPopulation = default_population;
 }
+
 template<typename T>
 CDiffEvol<T>::CDiffEvol(CProblem<T> *newProblem, int amount)
 {
@@ -96,6 +86,7 @@ CDiffEvol<T>::CDiffEvol(CProblem<T> *newProblem, int amount)
 	this->setPopulation(amount);
 	this->amountOfPopulation = amount;
 }
+
 template<typename T>
 CDiffEvol<T>::CDiffEvol(CProblem<T> *newProblem, int amount, double cross, double weight)
 {
@@ -129,6 +120,7 @@ void CDiffEvol<T>::vshowActualInstance()
 {
 	this->actualInstance->vShowInstance();
 }
+
 template<typename T>
 void CDiffEvol<T>::vshowActualSol()
 {
