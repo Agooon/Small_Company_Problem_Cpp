@@ -8,10 +8,7 @@
 #define CrossProb 0.95
 #define diffWeight 0.4
 
-#define default_D 2
-#define default_F 2
-#define default_M 2
-#define default_S 2
+
 #define default_population 1000
 
 #define MIN_VAL 0
@@ -74,9 +71,6 @@ std::vector<double> CDiffEvol<double>::getSolution(double time);
 template<typename T>
 CDiffEvol<T>::CDiffEvol()
 {
-	//	generateInstance(default_D, default_F, default_M, default_S);
-	//	setPopulation(default_population);
-	this->amountOfPopulation = default_population;
 }
 
 template<typename T>
@@ -104,6 +98,7 @@ CDiffEvol<T>::~CDiffEvol()
 
 template<typename T>
 std::vector<T> CDiffEvol<T>::generateSol(int seed) {
+	// No implementation for types other then int/double
 	return std::vector<T>();
 }
 
@@ -111,8 +106,8 @@ template<typename T>
 bool CDiffEvol<T>::bindividualsAreDifferent(int ind, int baseInd, int addInd0, int addInd1)
 {
 	return (ind != baseInd && ind != addInd0 && ind != addInd1 &&
-		baseInd != addInd0 && baseInd != addInd1 &&
-		addInd0 != addInd1);
+			baseInd != addInd0 && baseInd != addInd1 &&
+			addInd0 != addInd1);
 }
 
 template<typename T>
@@ -130,6 +125,6 @@ void CDiffEvol<T>::vshowActualSol()
 template<typename T>
 void CDiffEvol<T>::setPopulation(int amount)
 {
-
+	// No implementation for types other then int/double
 }
 

@@ -10,9 +10,11 @@ void CDiffEvol<int>::setPopulation(int amount)
 {
 	this->population.clear();
 	this->amountOfPopulation = amount;
+	int randSeed = this->device();
+	myGenerator.setSeed(this->device());
 	std::vector <int> newSol;
 	for (int i = 0; i < amount; i++) {
-		newSol = this->generateSol(this->device());
+		newSol = this->generateSol(myGenerator);
 		this->actualInstance->dGetQuality(newSol);
 		this->population.push_back(newSol);
 	}
@@ -93,9 +95,10 @@ void CDiffEvol<double>::setPopulation(int amount)
 {
 	this->population.clear();
 	this->amountOfPopulation = amount;
+	int randSeed = this->device();
 	std::vector <double> newSol;
 	for (int i = 0; i < amount; i++) {
-		newSol = this->generateSol(this->device());
+		newSol = this->generateSol(randSeed);
 		this->actualInstance->dGetQuality(newSol);
 		this->population.push_back(newSol);
 	}
