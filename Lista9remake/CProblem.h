@@ -35,7 +35,7 @@ protected:
 	std::vector< std::pair<T,T>> minmax; // Here every problem estimate some border values
 	int errCode = 0;
 	std::vector<T> pdSolution;
-	int lengthOfSol;
+	int lengthOfSol=0;
 };
 
 template <typename T>

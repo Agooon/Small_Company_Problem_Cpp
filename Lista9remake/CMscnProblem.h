@@ -1,7 +1,8 @@
 #pragma once
-#pragma warning(disable : 4996)
-#pragma warning(disable:4244)
-#pragma warning(disable:4477)
+#pragma warning(disable: 4996)
+#pragma warning(disable: 4244)
+#pragma warning(disable: 6031)
+#pragma warning(disable: 4477)
 #include "CRandom.h"
 #include "Matrix.h"
 #include "CProblem.h"
@@ -37,6 +38,7 @@ public:
 	inline CMscnProblem();
 	inline ~CMscnProblem();
 	inline CMscnProblem(const CMscnProblem<T> &copyProblem);
+	inline CMscnProblem(int d, int f, int m, int s, int seed, int min, int max);
 
 ////---- Getters for each val ----////
 
@@ -263,6 +265,12 @@ template<typename T>
 CMscnProblem<T>::CMscnProblem(const CMscnProblem<T> & copyProblem)
 {
 	this->vsetInstance(copyProblem);
+}
+
+template<typename T>
+CMscnProblem<T>::CMscnProblem(int d, int f, int m, int s, int seed, int min, int max)
+{
+	this->vGenerateInstance(d, f, m, s,seed, min, max);
 }
 
 template<typename T>

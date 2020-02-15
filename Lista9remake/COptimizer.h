@@ -11,10 +11,11 @@ class COptimizer
 {
 public:
 	COptimizer();
+	COptimizer(CProblem<T> *newInstance);
 	~COptimizer();
 
 	virtual std::vector<T> getSolution(double time)=0;
-	virtual std::vector<T> generateSingleSol()=0;
+	virtual std::vector<T> generateSingleSol(unsigned int seed)=0;
 	virtual void setInstance(CProblem<T> *newInstance) { actualInstance = newInstance; }
 	CProblem<T> *getInstance() { return actualInstance; }
 protected:
@@ -32,9 +33,17 @@ protected:
 template <typename T>
 COptimizer<T>::COptimizer()
 {
+	actualInstance = NULL;
+}
+
+template <typename T>
+COptimizer<T>::COptimizer(CProblem<T> *newInstance)
+{
+	this->setInstance(newInstance);
 }
 
 template <typename T>
 COptimizer<T>::~COptimizer()
 {
+	delete actualInstance;
 }

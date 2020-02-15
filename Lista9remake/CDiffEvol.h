@@ -17,6 +17,7 @@ class CDiffEvol: public COptimizer<T>
 {
 public:
 	CDiffEvol();
+	CDiffEvol(CProblem<T>* newProblem);
 	CDiffEvol(CProblem<T> *newProblem, int amount);
 	CDiffEvol(CProblem<T> *newProblem, int amount, double cross, double weight);
 	
@@ -24,8 +25,7 @@ public:
 
 	inline void setPopulation(int amount);
 
-	inline std::vector<T> generateSol(int seed);
-	inline std::vector<T> generateSingleSol() { return this->generateSol(this->device()); }
+	inline std::vector<T> generateSingleSol(unsigned int seed);
 
 	inline void setInstance(CProblem<T> *newProblem) { this->actualInstance = newProblem; }
 	inline CProblem<T>* getInstance() { return this->actualInstance; }
@@ -42,7 +42,7 @@ private:
 	double crossProb = CrossProb;
 	double diffweight = diffWeight;
 	std::vector<std::vector<T>> population;
-	int amountOfPopulation=default_population;
+	int amountOfPopulation=0;
 };
 
 // Specialized functions
@@ -52,7 +52,7 @@ template<>
 void CDiffEvol<int>::setPopulation(int amount);
 
 template<>
-std::vector<int> CDiffEvol<int>::generateSol(int seed);
+std::vector<int> CDiffEvol<int>::generateSingleSol(unsigned int seed);
 
 template<>
 std::vector<int> CDiffEvol<int>::getSolution(double time);
@@ -62,7 +62,7 @@ template<>
 void CDiffEvol<double>::setPopulation(int amount);
 
 template<>
-std::vector<double> CDiffEvol<double>::generateSol(int seed);
+std::vector<double> CDiffEvol<double>::generateSingleSol(unsigned int seed);
 
 template<>
 std::vector<double> CDiffEvol<double>::getSolution(double time);
@@ -71,6 +71,14 @@ std::vector<double> CDiffEvol<double>::getSolution(double time);
 template<typename T>
 CDiffEvol<T>::CDiffEvol()
 {
+}
+
+template<typename T>
+CDiffEvol<T>::CDiffEvol(CProblem<T>* newProblem)
+{
+	this->setInstance(newProblem);
+	this->setPopulation(default_population);
+	this->amountOfPopulation = default_population;
 }
 
 template<typename T>
@@ -97,7 +105,7 @@ CDiffEvol<T>::~CDiffEvol()
 }
 
 template<typename T>
-std::vector<T> CDiffEvol<T>::generateSol(int seed) {
+std::vector<T> CDiffEvol<T>::generateSingleSol(unsigned int seed) {
 	// No implementation for types other then int/double
 	return std::vector<T>();
 }

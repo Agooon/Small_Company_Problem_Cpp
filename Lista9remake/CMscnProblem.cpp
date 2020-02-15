@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CMscnProblem.h"
-
+#pragma warning(disable: 6031)
 //Specialized INT
 template<>
 bool CMscnProblem<int>::checkBasicCorrectness(std::vector<int> pdSol)
@@ -77,7 +77,8 @@ double CMscnProblem<int>::dGetQuality(std::vector<int> &pdSol) {
 		kosztUmow += used * this->um[i];
 	}
 	this->pdSolution.assign(pdSol.begin(), pdSol.end());
-	return przychod - kosztUmow - kosztTransportu;
+	const __int64 quality = (__int64)przychod - kosztUmow - kosztTransportu;
+	return quality;
 }
 
 template<>
@@ -427,7 +428,7 @@ bool CMscnProblem<int>::bReadFromFileInst(const char * name)
 	}
 	//p
 	this->p.resize(this->sklL);
-	fscanf(newFile, "%lf", helperC);
+	fscanf(newFile, "%s", helperC);
 	for (int i = 0; i < this->sklL; i++) {
 		fscanf(newFile, "%lf", &helper);
 		this->p[i] = (int)helper;

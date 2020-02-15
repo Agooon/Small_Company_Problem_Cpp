@@ -5,10 +5,12 @@ class CRandom
 {
 public:
 	CRandom();
+	CRandom(unsigned int seed);
 	~CRandom();
-	void setSeed(int newSeed);
+	void setSeed(unsigned int newSeed);
 
 	int iRandInt(int from, int to);
+	unsigned int iRandUInt(unsigned int from, unsigned int to);
 	double dRandDouble(double from, double to);
 
 private:

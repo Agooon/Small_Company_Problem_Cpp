@@ -25,7 +25,7 @@ public:
 
 	T getVal(int x, int y) const {
 		if (x >= heigth || y >= length || x < 0 || y < 0) {
-			return INT32_MIN;
+			return NULL;
 		}
 		return matrx[x*length + y];
 	}

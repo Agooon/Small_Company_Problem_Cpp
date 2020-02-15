@@ -11,11 +11,12 @@ class CRandomSearch: public COptimizer<T>
 {
 public:
 	CRandomSearch();
+	CRandomSearch(CProblem<T> *newInstance);
 	~CRandomSearch();
 
 	inline std::vector<T> getSolution(double time);
 
-	inline std::vector<T> generateSingleSol();
+	inline std::vector<T> generateSingleSol(unsigned int seed);
 	inline void setInstance(CProblem<T> *newInstance);
 	inline CProblem<T> *getInstance() { return this->actualInstance ; }
 	
@@ -30,18 +31,24 @@ template<>
 std::vector<int> CRandomSearch<int>::getSolution(double time);
 
 template<>
-std::vector<int> CRandomSearch<int>::generateSingleSol();
+std::vector<int> CRandomSearch<int>::generateSingleSol(unsigned int seed);
 
 template<>
 std::vector<double> CRandomSearch<double>::getSolution(double time);
 
 template<>
-std::vector<double> CRandomSearch<double>::generateSingleSol();
+std::vector<double> CRandomSearch<double>::generateSingleSol(unsigned int seed);
 
 // Functions for every type
 template<typename T>
 CRandomSearch<T>::CRandomSearch()
 {
+}
+
+template<typename T>
+CRandomSearch<T>::CRandomSearch(CProblem<T> *newInstance)
+{
+	this->actualInstance = newInstance;
 }
 
 template<typename T>
@@ -55,7 +62,7 @@ std::vector<T> CRandomSearch<T>::getSolution(double time) {
 }
 
 template<typename T>
-std::vector<T> CRandomSearch<T>::generateSingleSol() {
+std::vector<T> CRandomSearch<T>::generateSingleSol(unsigned int seed) {
 	return std::vector<T>();
 }
 

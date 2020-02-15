@@ -6,7 +6,7 @@
 template<>
 std::vector<int> CRandomSearch<int>::getSolution(double time)
 {
-	this->myGenerator.setSeed(device());
+	this->myGenerator.setSeed(this->device());
 
 	std::vector<int> newSol;
 	this->actualSol.clear();
@@ -15,7 +15,7 @@ std::vector<int> CRandomSearch<int>::getSolution(double time)
 	this->timer.queryPerfFreq();
 	while (timer.dgetD_secs() < time / 1000) {
 
-		newSol = this->generateSingleSol();//generowanie rozwi¹zania
+		newSol = this->generateSingleSol(myGenerator.iRandUInt(0, UINT_MAX));// 
 		//Nie ma jeszcze rozwi¹zania a spe³ania wymogi
 		if (actualSol.empty()) {
 			this->actualInstance->dGetQuality(newSol);
@@ -37,9 +37,9 @@ std::vector<int> CRandomSearch<int>::getSolution(double time)
 }
 
 template<>
-std::vector<int> CRandomSearch<int>::generateSingleSol()
+std::vector<int> CRandomSearch<int>::generateSingleSol(unsigned int seed)
 {
-	this->myGenerator.setSeed(this->device());
+	this->myGenerator.setSeed(seed);
 	std::vector<int> newSol;
 	newSol.resize(0);
 	for (int i = 0; i < this->actualInstance->getLength(); i++) {
@@ -52,7 +52,7 @@ std::vector<int> CRandomSearch<int>::generateSingleSol()
 template<>
 std::vector<double> CRandomSearch<double>::getSolution(double time)
 {
-	this->myGenerator.setSeed(device());
+	this->myGenerator.setSeed(this->device());
 
 	std::vector<double> newSol;
 	this->actualSol.clear();
@@ -61,7 +61,7 @@ std::vector<double> CRandomSearch<double>::getSolution(double time)
 	this->timer.queryPerfFreq();
 	while (timer.dgetD_secs() < time / 1000) {
 
-		newSol = this->generateSingleSol();//generowanie rozwi¹zania
+		newSol = this->generateSingleSol(myGenerator.iRandUInt(0, UINT_MAX));//generowanie rozwi¹zania
 		//Nie ma jeszcze rozwi¹zania a spe³ania wymogi
 		if (actualSol.empty()) {
 			this->actualInstance->dGetQuality(newSol);
@@ -83,9 +83,9 @@ std::vector<double> CRandomSearch<double>::getSolution(double time)
 }
 
 template<>
-std::vector<double> CRandomSearch<double>::generateSingleSol()
+std::vector<double> CRandomSearch<double>::generateSingleSol(unsigned int seed)
 {
-	this->myGenerator.setSeed(this->device());
+	this->myGenerator.setSeed(seed);
 	std::vector<double> newSol;
 	newSol.resize(0);
 	for (int i = 0; i < this->actualInstance->getLength(); i++) {
