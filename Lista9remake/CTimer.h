@@ -10,9 +10,6 @@ class CTimer
 public:
 	CTimer();
 	~CTimer();
-
-
-
 	void queryPerfStart() { QueryPerformanceCounter(&li_start); }
 	void queryPerfEnd()   { QueryPerformanceCounter(&li_end); }
 	void queryPerfFreq()  { QueryPerformanceFrequency(&li_freq); }
@@ -26,7 +23,7 @@ public:
 	void vsetD_secs(double secs) { d_secs = secs; }
 	void vsetD_secs(LARGE_INTEGER end, LARGE_INTEGER start, LARGE_INTEGER freq);
 private:
-	double d_secs;
+	double d_secs = 0;
 	LARGE_INTEGER li_start, li_end, li_freq;
 };
 

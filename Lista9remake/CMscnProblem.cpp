@@ -960,7 +960,7 @@ bool CMscnProblem<double>::bReadFromFileInst(const char * name)
 {
 	FILE *newFile;
 	newFile = fopen(name, "r+");
-	if (newFile == NULL) { std::cout << "xdd"; }
+	if (newFile == NULL) return false;
 	char *helperC;
 	helperC = new char[10];
 

@@ -23,16 +23,16 @@ public:
 	
 	~CDiffEvol();
 
-	inline void setPopulation(int amount);
+	void setPopulation(int amount);
 
-	inline std::vector<T> generateSingleSol(unsigned int seed);
+	std::vector<T> generateSingleSol(unsigned int seed);
 
-	inline void setInstance(CProblem<T> *newProblem) { this->actualInstance = newProblem; }
-	inline CProblem<T>* getInstance() { return this->actualInstance; }
+	void setInstance(CProblem<T> *newProblem) { this->actualInstance = newProblem; }
+	CProblem<T>* getInstance() { return this->actualInstance; }
 
-	inline bool bindividualsAreDifferent(int ind, int baseInd, int addInd0, int addInd1);
+	bool bindividualsAreDifferent(int ind, int baseInd, int addInd0, int addInd1);
 
-	inline std::vector<T> getSolution(double time);
+	std::vector<T> getSolution(double time);
 
 	void vsetWeight(double weight) { this->diffweight = weight; }
 	void vsetCross(double cross) { this->crossProb = cross; }

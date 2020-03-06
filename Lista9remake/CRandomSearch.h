@@ -14,11 +14,11 @@ public:
 	CRandomSearch(CProblem<T> *newInstance);
 	~CRandomSearch();
 
-	inline std::vector<T> getSolution(double time);
+	std::vector<T> getSolution(double time);
 
-	inline std::vector<T> generateSingleSol(unsigned int seed);
-	inline void setInstance(CProblem<T> *newInstance);
-	inline CProblem<T> *getInstance() { return this->actualInstance ; }
+	std::vector<T> generateSingleSol(unsigned int seed);
+	void setInstance(CProblem<T> *newInstance);
+	CProblem<T> *getInstance() { return this->actualInstance ; }
 	
 
 	void vshowActualInstance();

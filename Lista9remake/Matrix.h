@@ -12,29 +12,29 @@ template <typename T> class Matrix
 public:
 	Matrix();
 	~Matrix();
-	Matrix(int nheigth, int nlength);
-	Matrix(int nheigth, int nlength, std::vector <T> &newMatrx);
+	Matrix(size_t nheigth, size_t nlength);
+	Matrix(size_t nheigth, size_t nlength, std::vector <T> &newMatrx);
 
 	std::vector<T> getMatrix() { return matrx; }
-	void setMatrix(int nheigth, int nlength, std::vector <T> &newMatrx);
+	void setMatrix(size_t nheigth, size_t nlength, std::vector <T> &newMatrx);
 
-	void resize(int nheigth, int nlength);
-	int getLength() const { return length; }
-	int getHeight() const { return heigth; }
+	void resize(size_t nheigth, size_t nlength);
+	size_t getLength() const { return length; }
+	size_t getHeight() const { return heigth; }
 	
 
-	T getVal(int x, int y) const {
+	T getVal(size_t x, size_t y) const {
 		if (x >= heigth || y >= length || x < 0 || y < 0) {
 			return NULL;
 		}
 		return matrx[x*length + y];
 	}
-	void setVal(int x, int y, T value);
+	void setVal(size_t x, size_t y, T value);
 
 	int geterrCode() { return errCode; }
 private:
-	int length;
-	int heigth;
+	size_t length;
+	size_t heigth;
 	int errCode = 0;
 	std::vector <T> matrx;
 };
@@ -54,7 +54,7 @@ Matrix<T>::~Matrix()
 }
 
 template<typename T>
-Matrix<T>::Matrix(int nheigth,int nlength)
+Matrix<T>::Matrix(size_t nheigth, size_t nlength)
 {
 	length = nlength;
 	heigth = nheigth;
@@ -62,7 +62,7 @@ Matrix<T>::Matrix(int nheigth,int nlength)
 }
 
 template<typename T>
-Matrix<T>::Matrix(int nheigth, int nlength,std::vector<T>& newMatrx)
+Matrix<T>::Matrix(size_t nheigth, size_t nlength,std::vector<T>& newMatrx)
 {
 	length = nlength;
 	heigth = nheigth;
@@ -70,7 +70,7 @@ Matrix<T>::Matrix(int nheigth, int nlength,std::vector<T>& newMatrx)
 }
 
 template<typename T>
-void Matrix<T>::setMatrix(int nheigth, int nlength,std::vector<T> &newMatrx)
+void Matrix<T>::setMatrix(size_t nheigth, size_t nlength,std::vector<T> &newMatrx)
 {
 	errCode = 0;
 	if (nlength < 0 || nheigth < 0) {
@@ -83,7 +83,7 @@ void Matrix<T>::setMatrix(int nheigth, int nlength,std::vector<T> &newMatrx)
 }
 
 template<typename T>
-void Matrix<T>::resize(int nheigth,int nlength )
+void Matrix<T>::resize(size_t nheigth, size_t nlength )
 {
 	errCode = 0;
 	if ( nlength < 0 ||  nheigth < 0) {
@@ -99,7 +99,7 @@ void Matrix<T>::resize(int nheigth,int nlength )
 
 
 template<typename T>
-void Matrix<T>::setVal(int x, int y, T value)
+void Matrix<T>::setVal(size_t x, size_t y, T value)
 {
 	errCode = 0;
 	if (x >= heigth || y >= length || x < 0 || y < 0) {

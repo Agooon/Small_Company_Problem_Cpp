@@ -28,10 +28,11 @@ public:
 	virtual void vShowInstance()=0;
 	virtual void vShowSolution()=0;
 
-	virtual int getLength() { return this->lengthOfSol; }
-	virtual int getErrCode() { return this->errCode; }
-	virtual std::vector< std::pair<T, T>> getMinMax() { return this->minmax; }
+	int getLength() { return this->lengthOfSol; }
+	int getErrCode() { return this->errCode; }
+	std::vector< std::pair<T, T>> getMinMax() { return this->minmax; }
 protected:
+	std::string name;
 	std::vector< std::pair<T,T>> minmax; // Here every problem estimate some border values
 	int errCode = 0;
 	std::vector<T> pdSolution;

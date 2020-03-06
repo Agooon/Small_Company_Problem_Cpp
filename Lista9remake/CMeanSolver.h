@@ -9,8 +9,8 @@ public:
 	CMeanSolver();
 	~CMeanSolver();
 
-	inline std::vector<T> getSolution(double time) { return this->generateSingleSol(); }
-	inline std::vector<T> generateSingleSol();
+	std::vector<T> getSolution(double time) { return this->generateSingleSol(); }
+	std::vector<T> generateSingleSol();
 };
 
 // Specialized finctions

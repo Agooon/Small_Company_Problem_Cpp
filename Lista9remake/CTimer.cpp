@@ -2,9 +2,11 @@
 #include "CTimer.h"
 #pragma warning(disable:4244)
 
-
 CTimer::CTimer()
 {
+	this->queryPerfStart();
+	this->queryPerfEnd();
+	this->queryPerfFreq();
 }
 
 

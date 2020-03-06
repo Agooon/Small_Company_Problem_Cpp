@@ -35,10 +35,10 @@ template<typename T>
 class CMscnProblem: public CProblem<T>
 {
 public:
-	inline CMscnProblem();
-	inline ~CMscnProblem();
-	inline CMscnProblem(const CMscnProblem<T> &copyProblem);
-	inline CMscnProblem(int d, int f, int m, int s, int seed, int min, int max);
+	CMscnProblem();
+	~CMscnProblem();
+	CMscnProblem(const CMscnProblem<T> &copyProblem);
+	CMscnProblem(int d, int f, int m, int s, int seed, int min, int max);
 
 ////---- Getters for each val ----////
 
@@ -69,55 +69,55 @@ public:
 	Matrix<T> getXd() const { return this->xd; }
 	Matrix<T> getXf() const { return this->xf; }
 	Matrix<T> getXm() const { return this->xm; }
-	inline void vSaveSolution();
-	inline void vSaveSolution(std::vector<T> &pdSol);
-	inline std::vector<T> getSolution() { return this->pdSolution; }
+	void vSaveSolution();
+	void vSaveSolution(std::vector<T> &pdSol);
+	std::vector<T> getSolution() { return this->pdSolution; }
 
 ////---- Setting values inside of vectors/matrixs ----////
 
-	inline bool bsetCd(int indX, int  indY, T value);
-	inline bool bsetCf(int indX, int  indY, T value);
-	inline bool bsetCm(int indX, int  indY, T value);
+	bool bsetCd(int indX, int  indY, T value);
+	bool bsetCf(int indX, int  indY, T value);
+	bool bsetCm(int indX, int  indY, T value);
 
-	inline bool bsetSd(int indX, T value);
-	inline bool bsetSf(int indX, T value);
-	inline bool bsetSm(int indX, T value);
-	inline bool bsetSs(int indX, T value);
+	bool bsetSd(int indX, T value);
+	bool bsetSf(int indX, T value);
+	bool bsetSm(int indX, T value);
+	bool bsetSs(int indX, T value);
 
-	inline bool bsetUd(int indX, T value);
-	inline bool bsetUf(int indX, T value);
-	inline bool bsetUm(int indX, T value);
-	inline bool bsetP(int indX, T value);
+	bool bsetUd(int indX, T value);
+	bool bsetUf(int indX, T value);
+	bool bsetUm(int indX, T value);
+	bool bsetP(int indX, T value);
 
 ////---- Changing amout of vectors and matrixs ----////
 
-	inline bool bsetDostL(int value);
-	inline bool bsetFabL (int value);
-	inline bool bsetMagL (int value);
-	inline bool bsetSklL (int value);
+	bool bsetDostL(int value);
+	bool bsetFabL (int value);
+	bool bsetMagL (int value);
+	bool bsetSklL (int value);
 
 ////---- Other functions ----////
 
 	// Functions from abstract class
-	inline bool bConstraintsSatisfied(std::vector<T> pdSol);
-	inline double dGetQuality(std::vector<T> &pdSol);
+	bool bConstraintsSatisfied(std::vector<T> pdSol);
+	double dGetQuality(std::vector<T> &pdSol);
 
-	inline bool bReadFromFileInst(const char *name);
-	inline bool bSaveToFileInst(const char *name);
+	bool bReadFromFileInst(const char *name);
+	bool bSaveToFileInst(const char *name);
 
-	inline bool bReadFromFileSol(const char *name);
-	inline bool bSaveToFileSol(const char *name);
+	bool bReadFromFileSol(const char *name);
+	bool bSaveToFileSol(const char *name);
 
 	// Functions for generating random problem
-	inline void vsetBasics(int d, int f, int m, int s);
-	inline void vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
+	void vsetBasics(int d, int f, int m, int s);
+	void vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
 
-	inline void vsetInstance(const CMscnProblem<T> &newInstance);
+	void vsetInstance(const CMscnProblem<T> &newInstance);
 
 ////--- Functions for checking the status of the problem/solution ----////
 
-	inline void vShowInstance();
-	inline void vShowSolution();
+	void vShowInstance();
+	void vShowSolution();
 
 ////////////////////////////////////////////////////////////////
 

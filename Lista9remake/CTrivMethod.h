@@ -7,8 +7,8 @@ public:
 	CTrivMethod();
 	~CTrivMethod();
 
-	inline std::vector<T> getSolution(double time) { return this->generateSingleSol(); }
-	inline std::vector<T> generateSingleSol();
+	std::vector<T> getSolution(double time) { return this->generateSingleSol(); }
+	std::vector<T> generateSingleSol();
 	void setInstance(CProblem<T> *newInstance) { this->actualInstance = newInstance; }
 };
 
