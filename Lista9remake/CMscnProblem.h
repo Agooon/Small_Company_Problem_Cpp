@@ -36,9 +36,11 @@ class CMscnProblem: public CProblem<T>
 {
 public:
 	CMscnProblem();
-	~CMscnProblem();
-	CMscnProblem(const CMscnProblem<T> &copyProblem);
+	CMscnProblem(const char* name);
+	CMscnProblem(const CMscnProblem<T>& copyProblem);
 	CMscnProblem(int d, int f, int m, int s, int seed, int min, int max);
+	~CMscnProblem();
+	
 
 ////---- Getters for each val ----////
 
@@ -257,12 +259,13 @@ CMscnProblem<T>::CMscnProblem()
 }
 
 template<typename T>
-CMscnProblem<T>::~CMscnProblem()
+CMscnProblem<T>::CMscnProblem(const char *name)
 {
+	bReadFromFileInst(name);
 }
 
 template<typename T>
-CMscnProblem<T>::CMscnProblem(const CMscnProblem<T> & copyProblem)
+CMscnProblem<T>::CMscnProblem(const CMscnProblem<T>& copyProblem)
 {
 	this->vsetInstance(copyProblem);
 }
@@ -270,7 +273,12 @@ CMscnProblem<T>::CMscnProblem(const CMscnProblem<T> & copyProblem)
 template<typename T>
 CMscnProblem<T>::CMscnProblem(int d, int f, int m, int s, int seed, int min, int max)
 {
-	this->vGenerateInstance(d, f, m, s,seed, min, max);
+	this->vGenerateInstance(d, f, m, s, seed, min, max);
+}
+
+template<typename T>
+CMscnProblem<T>::~CMscnProblem()
+{
 }
 
 template<typename T>

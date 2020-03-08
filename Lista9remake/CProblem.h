@@ -8,8 +8,9 @@ template<typename T>
 class CProblem
 {
 public:
-	inline CProblem();
-	inline ~CProblem();
+	CProblem();
+	CProblem(const char *name);
+	~CProblem();
 
 	// Every problem/solution should be put in some kind of file
 	// so this methods are nessesary
@@ -42,6 +43,11 @@ protected:
 template <typename T>
 CProblem<T>::CProblem()
 {
+}
+template <typename T>
+CProblem<T>::CProblem(const char *name)
+{
+	this->bReadFromFileInst(name);
 }
 
 template <typename T>
