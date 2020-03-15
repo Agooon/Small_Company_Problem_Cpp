@@ -38,16 +38,16 @@ public:
 	CMscnProblem();
 	CMscnProblem(const char* name);
 	CMscnProblem(const CMscnProblem<T>& copyProblem);
-	CMscnProblem(int d, int f, int m, int s, int seed, int min, int max);
+	CMscnProblem(size_t d, size_t f, size_t m, size_t s, int seed, int min, int max);
 	~CMscnProblem();
 	
 
 ////---- Getters for each val ----////
 
-	int getDostL() { return this->dostL; }
-	int getFabL()  { return this->fabL; }
-	int getMagL()  { return this->magL; }
-	int getSklL()  { return this->sklL; }
+	size_t getDostL() { return this->dostL; }
+	size_t getFabL()  { return this->fabL; }
+	size_t getMagL()  { return this->magL; }
+	size_t getSklL()  { return this->sklL; }
 
 	Matrix<T> getCd() const { return this->cd; }
 	Matrix<T> getCf() const { return this->cf; }
@@ -73,7 +73,7 @@ public:
 	Matrix<T> getXm() const { return this->xm; }
 	void vSaveSolution();
 	void vSaveSolution(std::vector<T> &pdSol);
-	std::vector<T> getSolution() { return this->pdSolution; }
+	std::vector<T>& getSolution() { return this->pdSolution; }
 
 ////---- Setting values inside of vectors/matrixs ----////
 
@@ -93,10 +93,10 @@ public:
 
 ////---- Changing amout of vectors and matrixs ----////
 
-	bool bsetDostL(int value);
-	bool bsetFabL (int value);
-	bool bsetMagL (int value);
-	bool bsetSklL (int value);
+	bool bsetDostL(size_t value);
+	bool bsetFabL (size_t value);
+	bool bsetMagL (size_t value);
+	bool bsetSklL (size_t value);
 
 ////---- Other functions ----////
 
@@ -111,8 +111,8 @@ public:
 	bool bSaveToFileSol(const char *name);
 
 	// Functions for generating random problem
-	void vsetBasics(int d, int f, int m, int s);
-	void vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
+	void vsetBasics(size_t d, size_t f, size_t m, size_t s);
+	void vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal);
 
 	void vsetInstance(const CMscnProblem<T> &newInstance);
 
@@ -139,10 +139,10 @@ private:
 	CRandom myGenerator;
 	inline void vsetMinmax();
 // amount of suppliers/fabrics/warehouses/shops
-	int dostL = 0; // dostL - amount of suppliers 
-	int fabL = 0; // fabL - amount of fabrics
-	int magL = 0; // magL - amount of warehouses
-	int sklL = 0; // sklL - amount of shops
+	size_t dostL = 0; // dostL - amount of suppliers 
+	size_t fabL = 0; // fabL - amount of fabrics
+	size_t magL = 0; // magL - amount of warehouses
+	size_t sklL = 0; // sklL - amount of shops
 
 //////------- Data of The Problem -------//////
 
@@ -218,7 +218,7 @@ template<>
 bool CMscnProblem<int>::bReadFromFileSol(const char * name);
 
 template<>
-void CMscnProblem<int>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
+void CMscnProblem<int>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal);
 
 //Specialized DOUBLE
 template<>
@@ -249,7 +249,7 @@ template<>
 bool CMscnProblem<double>::bReadFromFileSol(const char * name);
 
 template<>
-void CMscnProblem<double>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal);
+void CMscnProblem<double>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal);
 
 
 // Functions for every type
@@ -271,7 +271,7 @@ CMscnProblem<T>::CMscnProblem(const CMscnProblem<T>& copyProblem)
 }
 
 template<typename T>
-CMscnProblem<T>::CMscnProblem(int d, int f, int m, int s, int seed, int min, int max)
+CMscnProblem<T>::CMscnProblem(size_t d, size_t f, size_t m, size_t s, int seed, int min, int max)
 {
 	this->vGenerateInstance(d, f, m, s, seed, min, max);
 }
@@ -453,7 +453,7 @@ bool CMscnProblem<T>::bsetP(int indX, T value)
 }
 
 template<typename T>
-bool CMscnProblem<T>::bsetDostL(int value)
+bool CMscnProblem<T>::bsetDostL(size_t value)
 {
 	if (value < 1 || value == this->dostL) {
 		this->errCode = WRONG_SIZE;
@@ -468,13 +468,13 @@ bool CMscnProblem<T>::bsetDostL(int value)
 	this->xd.resize(this->dostL, this->fabL);
 	this->xdminmax.resize(this->dostL*this->fabL, 2);
 
-	this->lengthOfSol = amountOfConst + (this->dostL*this->fabL) + (this->fabL * this->magL) + (this->magL*this->sklL);
+	this->lengthOfSol = (size_t)amountOfConst + (this->dostL*this->fabL) + (this->fabL * this->magL) + (this->magL*this->sklL);
 	this->minmax.resize(this->lengthOfSol);
 	return true;
 }
 
 template<typename T>
-bool CMscnProblem<T>::bsetFabL(int value)
+bool CMscnProblem<T>::bsetFabL(size_t value)
 {
 	if (value < 1 || value == this->fabL) {
 		this->errCode = WRONG_SIZE;
@@ -493,13 +493,13 @@ bool CMscnProblem<T>::bsetFabL(int value)
 	this->xf.resize(this->fabL, this->magL);
 	this->xfminmax.resize(this->fabL*this->magL, 2);
 
-	this->lengthOfSol = amountOfConst + (this->dostL*this->fabL) + (this->fabL *this->magL) + (this->magL*this->sklL);
+	this->lengthOfSol = (size_t)amountOfConst + (this->dostL*this->fabL) + (this->fabL *this->magL) + (this->magL*this->sklL);
 	this->minmax.resize(this->lengthOfSol);
 	return true;
 }
 
 template<typename T>
-bool CMscnProblem<T>::bsetMagL(int value)
+bool CMscnProblem<T>::bsetMagL(size_t value)
 {
 	if (value < 1 || value == this->magL) {
 		this->errCode = WRONG_SIZE;
@@ -517,13 +517,13 @@ bool CMscnProblem<T>::bsetMagL(int value)
 	this->xm.resize(this->magL, this->sklL);
 	this->xmminmax.resize(this->magL*this->sklL, 2);
 
-	this->lengthOfSol = amountOfConst + (this->dostL*this->fabL) + (this->fabL * this->magL) + (this->magL*this->sklL);
+	this->lengthOfSol = (size_t)amountOfConst + (this->dostL*this->fabL) + (this->fabL * this->magL) + (this->magL*this->sklL);
 	this->minmax.resize(this->lengthOfSol);
 	return true;
 }
 
 template<typename T>
-bool CMscnProblem<T>::bsetSklL(int value)
+bool CMscnProblem<T>::bsetSklL(size_t value)
 {
 	if (value < 1 || value == this->sklL) {
 		this->errCode = WRONG_SIZE;
@@ -537,7 +537,7 @@ bool CMscnProblem<T>::bsetSklL(int value)
 
 	this->xm.resize(this->magL, this->sklL);
 	this->xmminmax.resize(this->magL*this->sklL, 2);
-	this->lengthOfSol = amountOfConst + (this->dostL*this->fabL) + (this->fabL *this->magL) + (this->magL*this->sklL);
+	this->lengthOfSol = (size_t)amountOfConst + (this->dostL*this->fabL) + (this->fabL *this->magL) + (this->magL*this->sklL);
 	this->minmax.resize(this->lengthOfSol);
 	return true;
 }
@@ -795,7 +795,7 @@ bool CMscnProblem<T>::bSaveToFileSol(const char * name)
 }
 
 template<typename T>
-void CMscnProblem<T>::vsetBasics(int d, int f, int m, int s) {
+void CMscnProblem<T>::vsetBasics(size_t d, size_t f, size_t m, size_t s) {
 	this->bsetDostL(d);
 	this->bsetFabL(f);
 	this->bsetMagL(m);
@@ -803,7 +803,7 @@ void CMscnProblem<T>::vsetBasics(int d, int f, int m, int s) {
 }
 
 template<typename T>
-void CMscnProblem<T>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal) {
+void CMscnProblem<T>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal) {
 
 }
 
@@ -992,7 +992,7 @@ void CMscnProblem<T>::vShowSolution()
 template<typename T>
 void CMscnProblem<T>::vsetMinmax()
 {
-	this->lengthOfSol = (amountOfConst + this->dostL *this->fabL + this->fabL * this->magL + this->magL * this->sklL);
+	this->lengthOfSol = (size_t)amountOfConst + this->dostL *this->fabL + this->fabL * this->magL + this->magL * this->sklL;
 	this->minmax.resize(this->lengthOfSol);
 	this->minmax[0].first = this->dostL; this->minmax[0].second = this->dostL;
 	this->minmax[1].first = this->fabL;  this->minmax[1].second = this->fabL;

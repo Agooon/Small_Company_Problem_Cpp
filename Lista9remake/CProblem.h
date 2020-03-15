@@ -29,20 +29,24 @@ public:
 	virtual void vShowInstance()=0;
 	virtual void vShowSolution()=0;
 
-	int getLength() { return this->lengthOfSol; }
+	size_t getLength() { return this->lengthOfSol; }
 	int getErrCode() { return this->errCode; }
 	std::vector< std::pair<T, T>> getMinMax() { return this->minmax; }
+
+	void setName(const char *newName) { this->name = newName; }
+	const char* getName() { return name; }
 protected:
-	std::string name;
+	const char* name;
 	std::vector< std::pair<T,T>> minmax; // Here every problem estimate some border values
 	int errCode = 0;
 	std::vector<T> pdSolution;
-	int lengthOfSol=0;
+	size_t lengthOfSol=0;
 };
 
 template <typename T>
 CProblem<T>::CProblem()
 {
+	name = NULL;
 }
 template <typename T>
 CProblem<T>::CProblem(const char *name)

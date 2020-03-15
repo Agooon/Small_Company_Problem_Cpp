@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CConsoleMenu.h" />
     <ClInclude Include="CDiffEvol.h" />
     <ClInclude Include="CMeanSolver.h" />
     <ClInclude Include="CMscnProblem.h" />
@@ -158,12 +159,14 @@
     <ClInclude Include="CProblem.h" />
     <ClInclude Include="CRandom.h" />
     <ClInclude Include="CRandomSearch.h" />
+    <ClInclude Include="CSolution.h" />
     <ClInclude Include="CTimer.h" />
     <ClInclude Include="CTrivMethod.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CConsoleMenu.cpp" />
     <ClCompile Include="CDiffEvol.cpp" />
     <ClCompile Include="CMeanSolver.cpp" />
     <ClCompile Include="CMscnProblem.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="CProblem.cpp" />
     <ClCompile Include="CRandom.cpp" />
     <ClCompile Include="CRandomSearch.cpp" />
+    <ClCompile Include="CSolution.cpp" />
     <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CTrivMethod.cpp" />
     <ClCompile Include="Lista9remake.cpp" />

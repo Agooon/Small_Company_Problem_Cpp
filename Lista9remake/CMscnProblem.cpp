@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CMscnProblem.h"
+#pragma warning(disable: 4267)
 #pragma warning(disable: 6031)
 //Specialized INT
 template<>
@@ -338,10 +339,10 @@ bool CMscnProblem<int>::bReadFromFileInst(const char * name)
 	char *helperC;
 	helperC = new char[10];
 
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->dostL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->fabL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->magL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->sklL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->dostL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->fabL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->magL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->sklL);
 
 	//Moce produkcyjne/przerobowe
 	//sd
@@ -474,15 +475,15 @@ bool CMscnProblem<int>::bReadFromFileSol(const char * name)
 	this->errCode = 0;
 	FILE *newFile;
 	newFile = fopen(name, "r");
-	int d, f, m, s;
+	size_t d, f, m, s;
 
 	char *helperC;
 	helperC = new char[10];
 
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &d);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &f);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &m);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &s);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &d);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &f);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &m);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &s);
 
 	if (d != this->dostL || f != this->fabL || m != this->magL || s != this->sklL) {
 		this->errCode = WRONG_SOLUTION_FROM_FILE;
@@ -529,10 +530,10 @@ bool CMscnProblem<int>::bReadFromFileSol(const char * name)
 }
 
 template<>
-void CMscnProblem<int>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal) {
+void CMscnProblem<int>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal) {
 	vsetBasics(d, f, m, s);
 	this->myGenerator.setSeed(iInstanceSeed);
-	this->lengthOfSol = (amountOfConst + d * f + f * m + m * s);
+	this->lengthOfSol = ((size_t)amountOfConst + d * f + f * m + m * s);
 
 	int sredniaS = this->myGenerator.iRandInt(minVal, maxVal);
 	std::cout << std::endl << "Srednia wylosowana na seed(" << iInstanceSeed << "): " << sredniaS;
@@ -964,10 +965,10 @@ bool CMscnProblem<double>::bReadFromFileInst(const char * name)
 	char *helperC;
 	helperC = new char[10];
 
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->dostL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->fabL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->magL);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &this->sklL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->dostL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->fabL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->magL);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->sklL);
 
 	//Moce produkcyjne/przerobowe
 	//sd
@@ -1091,15 +1092,15 @@ bool CMscnProblem<double>::bReadFromFileSol(const char * name)
 	this->errCode = 0;
 	FILE *newFile;
 	newFile = fopen(name, "r");
-	int d, f, m, s;
+	size_t d, f, m, s;
 
 	char *helperC;
 	helperC = new char[10];
 
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &d);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &f);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &m);
-	fscanf(newFile, "%s", helperC); fscanf(newFile, "%i", &s);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &d);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &f);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &m);
+	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &s);
 
 	if (d != this->dostL || f != this->fabL || m != this->magL || s != this->sklL) {
 		this->errCode = WRONG_SOLUTION_FROM_FILE;
@@ -1146,7 +1147,7 @@ bool CMscnProblem<double>::bReadFromFileSol(const char * name)
 }
 
 template<>
-void CMscnProblem<double>::vGenerateInstance(int d, int f, int m, int s, int iInstanceSeed, double minVal, double maxVal) {
+void CMscnProblem<double>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s, int iInstanceSeed, double minVal, double maxVal) {
 	this->vsetBasics(d, f, m, s);
 	this->myGenerator.setSeed(iInstanceSeed);
 	this->lengthOfSol = (amountOfConst + d * f + f * m + m * s);
