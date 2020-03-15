@@ -632,12 +632,14 @@ void CMscnProblem<int>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s
 template<>
 bool CMscnProblem<double>::checkBasicCorrectness(std::vector<double> pdSol)
 {
+	std::cout << std::endl;
 	if (pdSol.empty()) {
 		this->errCode = PD_SOLUTION_ERR_NOT_EXIST;
 		return false;
 	}
 	//Czy ma wartoœci ujemne
 	for (size_t i = 0; i < pdSol.size(); i++) {
+		
 		if (pdSol[i] < 0) {
 			this->errCode = PD_SOLUTION_ERR_NEGATIVE_VAL;
 			return false;
@@ -665,6 +667,7 @@ double CMscnProblem<double>::dGetQuality(std::vector<double> &pdSol)
 
 
 	if (!this->bConstraintsSatisfied(pdSol)) {
+		std::cout << "Xd";
 		this->vRepairMinmax(pdSol);
 		this->vRepairLimits(pdSol);
 	}

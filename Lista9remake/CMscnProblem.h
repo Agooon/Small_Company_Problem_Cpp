@@ -284,6 +284,7 @@ CMscnProblem<T>::~CMscnProblem()
 template<typename T>
 void CMscnProblem<T>::vSaveSolution()
 {
+	this->pdSolution.clear();
 	//basic values
 	this->pdSolution.push_back(this->dostL); this->pdSolution.push_back(this->fabL);
 	this->pdSolution.push_back(this->magL);  this->pdSolution.push_back(this->sklL);
@@ -573,12 +574,15 @@ template<typename T>
 bool CMscnProblem<T>::bConstraintsSatisfied(std::vector<T> pdSol)
 {
 	if (!this->checkBasicCorrectness(pdSol)) {
+		std::cout << "1Xd";
 		return false;
 	}
 	if (!this->bCheckMinMax(pdSol)) {
+		std::cout << "2Xd";
 		return false;
 	}
 	if (!this->bCheckOverload()) {
+		std::cout << "3Xd";
 		return false;
 	}
 	this->pdSolution.assign(pdSol.begin(), pdSol.end());
