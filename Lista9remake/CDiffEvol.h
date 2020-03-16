@@ -20,7 +20,7 @@ public:
 	CDiffEvol(CProblem<T>* newProblem);
 	CDiffEvol(CProblem<T> *newProblem, int amount);
 	CDiffEvol(CProblem<T> *newProblem, int amount, double cross, double weight);
-	
+	CDiffEvol(CMscnProblem<T>& newInstance, int amount, double cross, double weight);
 	~CDiffEvol();
 
 	void setPopulation(int amount);
@@ -29,10 +29,11 @@ public:
 
 	void setInstance(CProblem<T> *newProblem) { this->actualInstance = newProblem; }
 	CProblem<T>* getInstance() { return this->actualInstance; }
-
+	void setInstance(CMscnProblem<T>& newInstance){ this->actualInstance = new CMscnProblem<T>(newInstance); }
 	bool bindividualsAreDifferent(int ind, int baseInd, int addInd0, int addInd1);
 
 	std::vector<T> getSolution(double time);
+	std::vector<T> getSolutionShow(double time);
 
 	void vsetWeight(double weight) { this->diffweight = weight; }
 	void vsetCross(double cross) { this->crossProb = cross; }
@@ -56,6 +57,8 @@ std::vector<int> CDiffEvol<int>::generateSingleSol(unsigned int seed);
 
 template<>
 std::vector<int> CDiffEvol<int>::getSolution(double time);
+template<>
+std::vector<int> CDiffEvol<int>::getSolutionShow(double time);
 
 //Specialized DOUBLE
 template<>
@@ -66,6 +69,8 @@ std::vector<double> CDiffEvol<double>::generateSingleSol(unsigned int seed);
 
 template<>
 std::vector<double> CDiffEvol<double>::getSolution(double time);
+template<>
+std::vector<double> CDiffEvol<double>::getSolutionShow(double time);
 
 // Functions for every type
 template<typename T>
@@ -93,6 +98,16 @@ template<typename T>
 CDiffEvol<T>::CDiffEvol(CProblem<T> *newProblem, int amount, double cross, double weight)
 {
 	this->setInstance(newProblem);
+	this->setPopulation(amount);
+	this->amountOfPopulation = amount;
+	this->crossProb = cross;
+	this->diffweight = weight;
+}
+
+template<typename T>
+CDiffEvol<T>::CDiffEvol(CMscnProblem<T>& newInstance, int amount, double cross, double weight)
+{
+	this->setInstance(newInstance);
 	this->setPopulation(amount);
 	this->amountOfPopulation = amount;
 	this->crossProb = cross;

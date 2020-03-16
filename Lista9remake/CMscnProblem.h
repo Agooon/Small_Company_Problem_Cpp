@@ -574,15 +574,12 @@ template<typename T>
 bool CMscnProblem<T>::bConstraintsSatisfied(std::vector<T> pdSol)
 {
 	if (!this->checkBasicCorrectness(pdSol)) {
-		std::cout << "1Xd";
 		return false;
 	}
 	if (!this->bCheckMinMax(pdSol)) {
-		std::cout << "2Xd";
 		return false;
 	}
 	if (!this->bCheckOverload()) {
-		std::cout << "3Xd";
 		return false;
 	}
 	this->pdSolution.assign(pdSol.begin(), pdSol.end());
@@ -795,6 +792,7 @@ bool CMscnProblem<T>::bSaveToFileSol(const char * name)
 		line += " \n";
 		fprintf(newFile, line.c_str());
 	}
+	fclose(newFile);
 	return true;
 }
 
@@ -996,7 +994,7 @@ void CMscnProblem<T>::vShowSolution()
 template<typename T>
 void CMscnProblem<T>::vsetMinmax()
 {
-	this->lengthOfSol = (size_t)amountOfConst + this->dostL *this->fabL + this->fabL * this->magL + this->magL * this->sklL;
+	this->lengthOfSol = ((size_t)amountOfConst + (this->dostL *this->fabL) + (this->fabL * this->magL) + (this->magL * this->sklL));
 	this->minmax.resize(this->lengthOfSol);
 	this->minmax[0].first = this->dostL; this->minmax[0].second = this->dostL;
 	this->minmax[1].first = this->fabL;  this->minmax[1].second = this->fabL;

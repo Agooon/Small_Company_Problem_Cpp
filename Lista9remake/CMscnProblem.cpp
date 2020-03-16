@@ -333,6 +333,7 @@ bool CMscnProblem<int>::bCheckOverload()
 template<>
 bool CMscnProblem<int>::bReadFromFileInst(const char * name)
 {
+	nameOfInst = std::string(name,strlen(name)-4);
 	FILE *newFile;
 	newFile = fopen(name, "r+");
 	if (newFile == NULL) { std::cout << "xdd"; }
@@ -632,7 +633,6 @@ void CMscnProblem<int>::vGenerateInstance(size_t d, size_t f, size_t m, size_t s
 template<>
 bool CMscnProblem<double>::checkBasicCorrectness(std::vector<double> pdSol)
 {
-	std::cout << std::endl;
 	if (pdSol.empty()) {
 		this->errCode = PD_SOLUTION_ERR_NOT_EXIST;
 		return false;
@@ -667,7 +667,6 @@ double CMscnProblem<double>::dGetQuality(std::vector<double> &pdSol)
 
 
 	if (!this->bConstraintsSatisfied(pdSol)) {
-		std::cout << "Xd";
 		this->vRepairMinmax(pdSol);
 		this->vRepairLimits(pdSol);
 	}
@@ -962,6 +961,7 @@ bool CMscnProblem<double>::bCheckOverload()
 template<>
 bool CMscnProblem<double>::bReadFromFileInst(const char * name)
 {
+	nameOfInst = std::string(name, strlen(name) - 4);
 	FILE *newFile;
 	newFile = fopen(name, "r+");
 	if (newFile == NULL) return false;
@@ -973,7 +973,6 @@ bool CMscnProblem<double>::bReadFromFileInst(const char * name)
 	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->magL);
 	fscanf(newFile, "%s", helperC); fscanf(newFile, "%zu", &this->sklL);
 
-	//Moce produkcyjne/przerobowe
 	//sd
 	this->sd.resize(this->dostL);
 	fscanf(newFile, "%s", helperC);

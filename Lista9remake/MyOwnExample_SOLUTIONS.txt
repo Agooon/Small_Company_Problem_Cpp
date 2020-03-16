@@ -1,1 +1,4 @@
-SimpleSol
+EvolSol
+NewEvolSol
+MOEsol
+MOEsolWrongVals

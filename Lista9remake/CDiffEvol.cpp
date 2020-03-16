@@ -33,11 +33,61 @@ std::vector<int> CDiffEvol<int>::generateSingleSol(unsigned int seed)
 template<>
 std::vector<int> CDiffEvol<int>::getSolution(double time)
 {
-	std::cout << std::endl << "---------------" << std::endl;
 	this->myGenerator.setSeed(this->device());
 	std::vector<int> baseInd, addInd0, addInd1, indNew;
 	int indexBase, indexAdd0, indexAdd1;
 	size_t genotypeSize =(size_t) this->population[0].size();
+	indNew.resize(genotypeSize);
+
+	this->timer.vsetD_secs(0);
+	this->timer.queryPerfStart();
+	this->timer.queryPerfFreq();
+	while (timer.dgetD_secs() < time / 1000) {
+		for (int i = 0; i < this->amountOfPopulation; i++) {
+			indexBase = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+			indexAdd0 = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+			indexAdd1 = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+
+			if (bindividualsAreDifferent(i, indexBase, indexAdd0, indexAdd1)) {
+				baseInd = this->population[indexBase];
+				addInd0 = this->population[indexAdd0];
+				addInd1 = this->population[indexAdd1];
+				for (size_t geneOffset = 0; geneOffset < genotypeSize; geneOffset++) {
+					if (this->myGenerator.dRandDouble(0, 1) < crossProb) {
+						indNew[geneOffset] = baseInd[geneOffset]
+							+ diffweight * (addInd0[geneOffset] - (__int64)addInd1[geneOffset]);
+					}
+					else {
+						indNew[geneOffset] = this->population[i][geneOffset];
+					}
+				}
+				if (this->actualInstance->bConstraintsSatisfied(indNew) &&
+					this->actualInstance->dGetQuality(indNew) >= this->actualInstance->dGetQuality(population[i])) {
+					this->population[i] = indNew;
+				}
+			}
+		}
+		this->timer.queryPerfEnd();
+		this->timer.vsetD_secs(this->timer.getliEnd(), this->timer.getliStart(), this->timer.getliFreq());
+	}
+	this->actualSol = this->population[0];
+	for (int i = 1; i < this->amountOfPopulation; i++) {
+		if (this->actualInstance->dGetQuality(actualSol) < this->actualInstance->dGetQuality(population[i])) {
+			this->actualSol = this->population[i];
+		}
+
+	}
+	return this->actualSol;
+}
+
+template<>
+std::vector<int> CDiffEvol<int>::getSolutionShow(double time)
+{
+	std::cout << std::endl << "---------------" << std::endl;
+	this->myGenerator.setSeed(this->device());
+	std::vector<int> baseInd, addInd0, addInd1, indNew;
+	int indexBase, indexAdd0, indexAdd1;
+	size_t genotypeSize = (size_t)this->population[0].size();
 	indNew.resize(genotypeSize);
 
 	this->timer.vsetD_secs(0);
@@ -114,6 +164,60 @@ std::vector<double> CDiffEvol<double>::generateSingleSol(unsigned int seed)
 
 template<>
 std::vector<double> CDiffEvol<double>::getSolution(double time)
+{
+	std::cout << std::endl << "---------------" << std::endl;
+	this->myGenerator.setSeed(this->device());
+	std::vector<double> baseInd, addInd0, addInd1, indNew;
+	int indexBase, indexAdd0, indexAdd1;
+	size_t genotypeSize = this->population[0].size();
+	indNew.resize(genotypeSize);
+
+	this->timer.vsetD_secs(0);
+	this->timer.queryPerfStart();
+	this->timer.queryPerfFreq();
+	while (timer.dgetD_secs() < time / 1000) {
+		// I put here the "std::cout" to show how algorithm improves the population. // To improve the algorithm you can comment it out.
+		for (int i = 0; i < this->amountOfPopulation; i++) {
+			indexBase = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+			indexAdd0 = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+			indexAdd1 = this->myGenerator.iRandInt(0, this->amountOfPopulation - 1);
+
+			if (this->bindividualsAreDifferent(i, indexBase, indexAdd0, indexAdd1)) {
+				baseInd = this->population[indexBase];
+				addInd0 = this->population[indexAdd0];
+				addInd1 = this->population[indexAdd1];
+				for (size_t geneOffset = 0; geneOffset < genotypeSize; geneOffset++) {
+					if (this->myGenerator.dRandDouble(0, 1) < crossProb) {
+						indNew[geneOffset] = baseInd[geneOffset]
+							+ diffweight * (addInd0[geneOffset] - addInd1[geneOffset]);
+					}
+					else {
+						indNew[geneOffset] = this->population[i][geneOffset];
+					}
+				}
+				if (this->actualInstance->bConstraintsSatisfied(indNew) &&
+					this->actualInstance->dGetQuality(indNew) >= this->actualInstance->dGetQuality(population[i])) {
+					this->population[i] = indNew;
+				}
+			}
+		}
+		this->timer.queryPerfEnd();
+		this->timer.vsetD_secs(this->timer.getliEnd(), this->timer.getliStart(), this->timer.getliFreq());
+	}
+	this->actualSol = this->population[0];
+	for (int i = 1; i < this->amountOfPopulation; i++) {
+		if (this->actualInstance->dGetQuality(actualSol) < this->actualInstance->dGetQuality(population[i])) {
+			this->actualSol = this->population[i];
+		}
+
+	}
+	std::cout << std::endl << "The best solution from population: " << this->actualInstance->dGetQuality(this->actualSol) << std::endl;
+
+	return this->actualSol;
+}
+
+template<>
+std::vector<double> CDiffEvol<double>::getSolutionShow(double time)
 {
 	std::cout << std::endl << "---------------" << std::endl;
 	this->myGenerator.setSeed(this->device());

@@ -10,13 +10,13 @@ public:
 	std::string sGetName() { return name; }
 
 	void vSetSolution(std::vector<double> newSol) { this->solution = newSol; }
-	std::vector<double> getSolution() { return this->solution; }
+	std::vector<double>& getSolution() { return this->solution; }
 	
 	void vsetQuality(double newQuality) { quality = newQuality; }
 	double dGetQuality() { return this->quality; }
 
 	std::string toString() {
-		return name + " "+ std::to_string(this->quality);
+		return name + " | "+ std::to_string(this->quality);
 	}
 private:
 	std::string name="Default_Name";

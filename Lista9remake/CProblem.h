@@ -33,10 +33,10 @@ public:
 	int getErrCode() { return this->errCode; }
 	std::vector< std::pair<T, T>> getMinMax() { return this->minmax; }
 
-	void setName(const char *newName) { this->name = newName; }
-	const char* getName() { return name; }
+	void setName(const char *newName) { this->nameOfInst = newName; }
+	std::string getName() { return nameOfInst; }
 protected:
-	const char* name;
+	std::string nameOfInst;
 	std::vector< std::pair<T,T>> minmax; // Here every problem estimate some border values
 	int errCode = 0;
 	std::vector<T> pdSolution;
@@ -46,7 +46,6 @@ protected:
 template <typename T>
 CProblem<T>::CProblem()
 {
-	name = NULL;
 }
 template <typename T>
 CProblem<T>::CProblem(const char *name)
